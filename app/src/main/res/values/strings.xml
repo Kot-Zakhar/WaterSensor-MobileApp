@@ -5,4 +5,12 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="disconnect">Disconnect</string>
+    <string name="ping">Ping</string>
+    <string name="ping_command">Ping</string>
+    <string name="wifi_command">Wi-Fi</string>
+    <string name="email_command">Email</string>
+    <string name="email_restart">Restart</string>
+    <string name="restart_command">Restart</string>
+    <string name="mode_command">Change mode</string>
+    <string name="online_statistics_command">Online statistics</string>
 </resources>

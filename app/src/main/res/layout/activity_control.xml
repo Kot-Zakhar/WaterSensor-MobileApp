@@ -7,33 +7,66 @@
         android:layout_height="match_parent"
         tools:context=".ControlActivity"
         >
-
-    <Button
-            android:id="@+id/control_led_on"
-            android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:text="@string/on"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0"
+            android:layout_margin="30dp"
+            >
+<!--    TODO:    rebuild this piece of shit into generated list -->
+        <Button
+                android:id="@+id/control_ping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="@string/ping_command"/>
 
-    <Button
-            android:id="@+id/control_led_off"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/control_led_on"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:text="@string/off"/>
+        <Button
+                android:id="@+id/control_wifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/control_ping"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="@string/wifi_command"/>
 
-    <Button
-            android:id="@+id/control_led_disconnect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/control_led_off"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:text="@string/disconnect"/>
+        <Button
+                android:id="@+id/control_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/control_wifi"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="@string/email_command"/>
+
+        <Button
+                android:id="@+id/control_restart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/control_email"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="@string/restart_command"/>
+
+        <Button
+                android:id="@+id/control_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/control_restart"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="@string/mode_command"/>
+
+        <Button
+                android:id="@+id/control_online_statistics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/control_mode"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="@string/online_statistics_command"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

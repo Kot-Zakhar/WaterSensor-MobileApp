@@ -7,66 +7,101 @@
         android:layout_height="match_parent"
         tools:context=".ControlActivity"
         >
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0"
-            android:layout_margin="30dp"
+            android:padding="15dp"
             >
-<!--    TODO:    rebuild this piece of shit into generated list -->
-        <Button
-                android:id="@+id/control_ping"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:text="@string/ping_command"/>
 
-        <Button
-                android:id="@+id/control_wifi"
-                android:layout_width="wrap_content"
+        <!--    Ping section    -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/control_ping"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:text="@string/wifi_command"/>
+                android:padding="15dp"
+                >
+            <Button
+                    android:id="@+id/activity_control__ping__button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="@string/ping"
+                    />
+            <TextView
+                    android:id="@+id/activity_control__ping__text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:textSize="20sp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-                android:id="@+id/control_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/control_wifi"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:text="@string/email_command"/>
 
-        <Button
-                android:id="@+id/control_restart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/control_email"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:text="@string/restart_command"/>
+    </LinearLayout>
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintVertical_bias="0"-->
+<!--            android:layout_margin="30dp"-->
+<!--            >-->
+<!--&lt;!&ndash;    TODO:    rebuild this piece of shit into generated list &ndash;&gt;-->
+<!--        <Button-->
+<!--                android:id="@+id/control_ping"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                android:text="@string/ping_command"/>-->
 
-        <Button
-                android:id="@+id/control_mode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/control_restart"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:text="@string/mode_command"/>
+<!--        <Button-->
+<!--                android:id="@+id/control_wifi"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/control_ping"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                android:text="@string/wifi_command"/>-->
 
-        <Button
-                android:id="@+id/control_online_statistics"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/control_mode"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:text="@string/online_statistics_command"/>
+<!--        <Button-->
+<!--                android:id="@+id/control_email"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/control_wifi"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                android:text="@string/email_command"/>-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        <Button-->
+<!--                android:id="@+id/control_restart"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/control_email"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                android:text="@string/restart_command"/>-->
+
+<!--        <Button-->
+<!--                android:id="@+id/control_mode"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/control_restart"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                android:text="@string/mode_command"/>-->
+
+<!--        <Button-->
+<!--                android:id="@+id/control_online_statistics"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/control_mode"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                android:text="@string/online_statistics_command"/>-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

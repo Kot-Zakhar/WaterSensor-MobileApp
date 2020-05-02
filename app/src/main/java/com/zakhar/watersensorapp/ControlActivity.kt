@@ -5,11 +5,21 @@ import android.bluetooth.BluetoothSocket
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.zakhar.watersensorapp.bluetoothCommands.PingCommand
+import com.zakhar.watersensorapp.CurrentBluetoothDevice
 import kotlinx.android.synthetic.main.activity_control.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import java.io.IOException
+import kotlin.coroutines.CoroutineContext
 
-class ControlActivity: AppCompatActivity() {
+class ControlActivity: AppCompatActivity(), CoroutineScope {
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    private lateinit var job: Job
+
     private val TAG = "ControlActivity"
     companion object {
         lateinit var adapter: BluetoothAdapter
@@ -19,27 +29,23 @@ class ControlActivity: AppCompatActivity() {
     }
 
     fun bindControls() {
-        control_ping.setOnClickListener {
-            GlobalScope.launch {
-                sendCommand("ping\n")
-                val answer = getAnswer()
-                if (answer == "pong") {
-                    Log.i(TAG, "got response")
-                } else {
-                    Log.i(TAG, "Wrong response $answer")
-                }
-            }
+        if (socket == null){
+            Log.e(TAG, "Socket is null. Cannot bind controls.")
+            return
         }
+
+        PingCommand(this, socket!!, activity_control__ping__button, activity_control__ping__text_view)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_control)
+        job = Job()
 
         deviceName = intent.getStringExtra(MainActivity.EXTRA_DEVICE_NAME)
         deviceMac = intent.getStringExtra(MainActivity.EXTRA_DEVICE_MAC)
 
-        socket = SocketHandler.getSocket()
+        socket = CurrentBluetoothDevice.getSocket()
 
         if (socket == null) {
             Log.i("ControlActivity", "Socket is null.")
@@ -51,28 +57,8 @@ class ControlActivity: AppCompatActivity() {
 
     override fun onDestroy() {
         socket?.close()
+        job.cancel()
         super.onDestroy()
     }
 
-    private fun sendCommand(input: String) {
-        try {
-            socket!!.outputStream.write(input.toByteArray())
-            socket!!.outputStream.flush()
-        } catch (e: IOException ) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun getAnswer(): String? {
-        try {
-            while (socket!!.inputStream.available() == 0 && socket!!.isConnected()) {
-                Log.i(TAG, "Stream is empty")
-            }
-            val line = String(ByteArray(socket!!.inputStream.available()))
-            return line
-        } catch (e: IOException ) {
-            e.printStackTrace()
-            return null
-        }
-    }
 }

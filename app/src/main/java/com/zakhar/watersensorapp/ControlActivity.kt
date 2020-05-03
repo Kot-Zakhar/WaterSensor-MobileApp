@@ -6,27 +6,22 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.zakhar.watersensorapp.bluetoothCommands.PingCommand
-import com.zakhar.watersensorapp.CurrentBluetoothDevice
+import com.zakhar.watersensorapp.bluetoothCommands.WifiCommand
+import com.zakhar.watersensorapp.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.activity_control.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import java.io.IOException
 import kotlin.coroutines.CoroutineContext
 
 class ControlActivity: AppCompatActivity(), CoroutineScope {
+    private val TAG = "ControlActivity"
+
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-    private lateinit var job: Job
-
-    private val TAG = "ControlActivity"
-    companion object {
-        lateinit var adapter: BluetoothAdapter
-        var deviceName: String? = null
-        var deviceMac: String? = null
-        var socket: BluetoothSocket? = null
-    }
+    private var job = Job()
+    private var socket: BluetoothSocket? = null
 
     fun bindControls() {
         if (socket == null){
@@ -34,21 +29,18 @@ class ControlActivity: AppCompatActivity(), CoroutineScope {
             return
         }
 
-        PingCommand(this, socket!!, activity_control__ping__button, activity_control__ping__text_view)
+        PingCommand(this, activity_control__ping__button, activity_control__ping__text_view)
+        WifiCommand(this, activity_control__wifi__button)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_control)
-        job = Job()
-
-        deviceName = intent.getStringExtra(MainActivity.EXTRA_DEVICE_NAME)
-        deviceMac = intent.getStringExtra(MainActivity.EXTRA_DEVICE_MAC)
 
         socket = CurrentBluetoothDevice.getSocket()
 
         if (socket == null) {
-            Log.i("ControlActivity", "Socket is null.")
+            Log.i(TAG, "Socket is null.")
             finish()
         }
 
@@ -57,6 +49,8 @@ class ControlActivity: AppCompatActivity(), CoroutineScope {
 
     override fun onDestroy() {
         socket?.close()
+        CurrentBluetoothDevice.setSocket(null)
+        CurrentBluetoothDevice.device = null;
         job.cancel()
         super.onDestroy()
     }

@@ -1,4 +1,4 @@
-package com.zakhar.watersensorapp
+package com.zakhar.watersensorapp.mainActivity
 
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
@@ -9,27 +9,29 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
+import com.zakhar.watersensorapp.ControlActivity
 import com.zakhar.watersensorapp.CurrentBluetoothDevice
+import com.zakhar.watersensorapp.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.IOException
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoroutineScope {
     private val TAG = "MainActivity"
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+    private var job: Job = Job()
+
     private var appUUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
     private lateinit var bluetoothAdapter: BluetoothAdapter
     private lateinit var devicesArrayAdapter : BluetoothDeviceArrayAdapter
 
     private val REQUEST_ENABLE_BLUETOOTH = 1
     private val REQUEST_GRANT_PERMISSIONS = 2
-
-    companion object {
-        val EXTRA_DEVICE_NAME: String = "BT_device_name"
-        val EXTRA_DEVICE_MAC: String = "BT_device_mac"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +47,8 @@ class MainActivity : AppCompatActivity() {
 
         val devices = bluetoothAdapter.bondedDevices.toTypedArray()
 
-        devicesArrayAdapter = BluetoothDeviceArrayAdapter(this, devices)
+        devicesArrayAdapter =
+            BluetoothDeviceArrayAdapter(this, devices)
 
 
         content_main_list_view_device_list.adapter = devicesArrayAdapter
@@ -53,14 +56,12 @@ class MainActivity : AppCompatActivity() {
             val device: BluetoothDevice = devicesArrayAdapter.getItem(position) ?: return@OnItemClickListener
             val socket = device.createRfcommSocketToServiceRecord(appUUID)
 
-            GlobalScope.launch {
+            launch {
                 try {
                     socket.connect()
                     if (socket.isConnected) {
                         CurrentBluetoothDevice.setSocket(socket)
                         val intent = Intent(this@MainActivity, ControlActivity::class.java)
-                        intent.putExtra(EXTRA_DEVICE_NAME, device.name)
-                        intent.putExtra(EXTRA_DEVICE_MAC, device.address)
                         startActivity(intent)
                     } else {
                         Log.i(TAG, "Socket is not connected.")
@@ -104,5 +105,10 @@ class MainActivity : AppCompatActivity() {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults)
             }
         }
+    }
+
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
     }
 }

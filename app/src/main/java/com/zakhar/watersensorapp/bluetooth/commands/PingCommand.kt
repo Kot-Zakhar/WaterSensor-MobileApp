@@ -1,6 +1,5 @@
-package com.zakhar.watersensorapp.bluetoothCommands
+package com.zakhar.watersensorapp.bluetooth.commands
 
-import android.bluetooth.BluetoothSocket
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView

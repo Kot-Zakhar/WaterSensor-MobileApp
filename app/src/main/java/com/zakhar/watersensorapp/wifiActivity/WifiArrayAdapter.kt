@@ -1,7 +1,6 @@
 package com.zakhar.watersensorapp.wifiActivity
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,25 +8,16 @@ import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import android.widget.TextView
 import com.zakhar.watersensorapp.R
+import com.zakhar.watersensorapp.bluetooth.commands.wifi.EditWifiRecordCommand
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
-class WifiArrayAdapter: ArrayAdapter<WifiRecord> {
+class WifiArrayAdapter(
+    private val coroutineScope: CoroutineScope,
+    val editCommand: EditWifiRecordCommand,
+    context: Context
+) : ArrayAdapter<WifiRecord>(context, R.layout.wifi_list_item) {
     private val TAG = "WifiArrayAdapter"
-    constructor(context: Context) : super(context, R.layout.wifi_list_item)
-    constructor(context: Context, textViewResourceId: Int) : super(context, R.layout.wifi_list_item, textViewResourceId)
-    constructor(context: Context, objects: Array<out WifiRecord>) : super(context, R.layout.wifi_list_item, objects)
-    constructor(context: Context, textViewResourceId: Int, objects: Array<out WifiRecord>) : super(
-        context,
-        R.layout.wifi_list_item,
-        textViewResourceId,
-        objects
-    )
-    constructor(context: Context, objects: MutableList<WifiRecord>) : super(context, R.layout.wifi_list_item, objects)
-    constructor(context: Context, textViewResourceId: Int, objects: MutableList<WifiRecord>) : super(
-        context,
-        R.layout.wifi_list_item,
-        textViewResourceId,
-        objects
-    )
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val wifiRecord = this.getItem(position)
@@ -41,8 +31,14 @@ class WifiArrayAdapter: ArrayAdapter<WifiRecord> {
         ssid.setText(wifiRecord?.ssid)
 
         val clearButton = rowView.findViewById<ImageButton>(R.id.wifi_list_item__clear__image_button)
+
+        val arrayAdapter = this;
+
         clearButton.setOnClickListener{
-            Log.i(TAG, "Clear button of ${wifiRecord?.ssid}")
+            coroutineScope.launch {
+                if (editCommand.removeRecord(position))
+                    arrayAdapter.remove(wifiRecord)
+            }
         }
 
         return rowView

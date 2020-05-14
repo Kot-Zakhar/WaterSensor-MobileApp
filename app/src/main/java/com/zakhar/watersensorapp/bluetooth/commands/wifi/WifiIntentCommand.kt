@@ -1,13 +1,13 @@
-package com.zakhar.watersensorapp.bluetoothCommands
+package com.zakhar.watersensorapp.bluetooth.commands.wifi
 
-import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.Intent
 import android.widget.Button
 import androidx.core.content.ContextCompat.startActivity
+import com.zakhar.watersensorapp.bluetooth.commands.BluetoothCommand
 import com.zakhar.watersensorapp.wifiActivity.WifiActivity
 
-class WifiCommand(
+class WifiIntentCommand(
     private val packageContext: Context,
     private val button: Button
 ) : BluetoothCommand()
@@ -20,4 +20,6 @@ class WifiCommand(
         val intent = Intent(packageContext, WifiActivity::class.java)
         startActivity(packageContext, intent, null)
     }
+
+
 }

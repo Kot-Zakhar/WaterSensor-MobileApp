@@ -1,17 +1,18 @@
 package com.zakhar.watersensorapp.wifiActivity
 
 import android.bluetooth.BluetoothSocket
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.transition.Visibility
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.zakhar.watersensorapp.CurrentBluetoothDevice
 import com.zakhar.watersensorapp.R
+import com.zakhar.watersensorapp.bluetooth.commands.wifi.EditWifiRecordCommand
+import com.zakhar.watersensorapp.bluetooth.messages.queries.NewWifiRecordQuery
+import com.zakhar.watersensorapp.bluetooth.messages.responses.SimpleResponse
+import com.zakhar.watersensorapp.bluetooth.messages.responses.WifiRecordsResponse
 import kotlinx.android.synthetic.main.activity_wifi.*
 import kotlinx.coroutines.*
-import kotlinx.serialization.builtins.list
 import kotlinx.serialization.json.Json
 import kotlin.coroutines.CoroutineContext
 
@@ -36,15 +37,17 @@ class WifiActivity: AppCompatActivity(), CoroutineScope {
             finish()
         }
 
-        wifiArrayAdapter = WifiArrayAdapter(this)
+
+        wifiArrayAdapter = WifiArrayAdapter(this, EditWifiRecordCommand(), this)
 
         activity_wifi__wifi_records__list_view.adapter = wifiArrayAdapter
 
         launch {
-            val serializedWifiRecords = CurrentBluetoothDevice.sendCommandWithFeedback("json:show")
+
+            val serializedWifiRecords = CurrentBluetoothDevice.sendCommandWithFeedback("{\"command\":\"show\"}")
             Log.d(TAG, serializedWifiRecords)
-            val records = Json.parse(WifiRecord.serializer().list, serializedWifiRecords)
-            wifiArrayAdapter.addAll(records)
+            val recordsMessage = Json.parse(WifiRecordsResponse.serializer(), serializedWifiRecords)
+            wifiArrayAdapter.addAll(recordsMessage.payload)
         }
     }
 
@@ -67,22 +70,28 @@ class WifiActivity: AppCompatActivity(), CoroutineScope {
         if (ssid.isEmpty())
             return
 
-        val newWifiRecord = WifiRecord(ssid, password)
-        val serializedRecord = Json.stringify(WifiRecord.serializer(), newWifiRecord);
+        val newWifiRecordMessage =
+            NewWifiRecordQuery(
+                WifiRecord(
+                    ssid,
+                    password
+                )
+            )
+
+        val serializedRecord = Json.stringify(NewWifiRecordQuery.serializer(), newWifiRecordMessage);
         Log.d(TAG, serializedRecord)
 
         launch {
-            CurrentBluetoothDevice.sendCommand("json:new wifi")
-            delay(1000)
-            val result = CurrentBluetoothDevice.sendCommandWithFeedback(serializedRecord)
-            if (result.trim().toLowerCase() == "ok") {
+            val serializedResponse = CurrentBluetoothDevice.sendCommandWithFeedback(serializedRecord)
+            val response = Json.parse(SimpleResponse.serializer(), serializedResponse)
+            if (response.status.trim().toLowerCase() == "ok") {
                 activity_wifi__new_record__ssid__edit_text.text.clear()
                 activity_wifi__new_record__password__edit_text.text.clear()
                 toggleNewWifiForm(activity_wifi__new_record__confirm__image_button)
                 val adapter = activity_wifi__wifi_records__list_view.adapter as WifiArrayAdapter
-                adapter.add(newWifiRecord)
+                adapter.add(newWifiRecordMessage.payload)
             } else {
-                Log.e(TAG, result)
+                Log.e(TAG, response.status)
             }
         }
     }

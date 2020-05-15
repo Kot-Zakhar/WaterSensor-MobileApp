@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/navigation_settings_wifi"
+            android:icon="@drawable/ic_wifi_black"
+            android:title="@string/title_settings_wifi"/>
+
+    <item
+            android:id="@+id/navigation_settings_email"
+            android:icon="@drawable/ic_email_black"
+            android:title="@string/title_settings_email"/>
+
+</menu>

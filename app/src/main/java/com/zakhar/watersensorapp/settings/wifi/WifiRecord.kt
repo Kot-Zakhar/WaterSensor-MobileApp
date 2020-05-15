@@ -1,4 +1,4 @@
-package com.zakhar.watersensorapp.wifiActivity
+package com.zakhar.watersensorapp.settings.wifi
 
 import kotlinx.serialization.Serializable
 

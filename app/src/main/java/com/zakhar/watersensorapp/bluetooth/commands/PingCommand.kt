@@ -3,7 +3,7 @@ package com.zakhar.watersensorapp.bluetooth.commands
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import com.zakhar.watersensorapp.CurrentBluetoothDevice
+import com.zakhar.watersensorapp.bluetooth.CurrentBluetoothDevice
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,14 +13,14 @@ import java.util.concurrent.TimeUnit
 class PingCommand (private val coroutineScope: CoroutineScope,
                    private val button: Button,
                    private val textView: TextView
-) : BluetoothCommand() {
+) {
 
     private val TAG = "PingCommand"
     init {
         button.setOnClickListener{ execute() }
     }
 
-    override fun execute() {
+    fun execute() {
         coroutineScope.launch (Dispatchers.Main) {
             button.isEnabled = false
             val startTime = System.nanoTime()

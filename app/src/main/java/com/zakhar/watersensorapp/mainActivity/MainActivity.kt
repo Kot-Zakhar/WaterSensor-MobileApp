@@ -9,10 +9,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
-import com.zakhar.watersensorapp.ControlActivity
-import com.zakhar.watersensorapp.CurrentBluetoothDevice
+import com.zakhar.watersensorapp.bluetooth.CurrentBluetoothDevice
 import com.zakhar.watersensorapp.R
-import kotlinx.android.synthetic.main.activity_main.*
+import com.zakhar.watersensorapp.settings.SettingsActivity
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.*
 import java.io.IOException
@@ -36,7 +35,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(activity_main__toolbar)
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 
@@ -61,7 +59,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                     socket.connect()
                     if (socket.isConnected) {
                         CurrentBluetoothDevice.setSocket(socket)
-                        val intent = Intent(this@MainActivity, ControlActivity::class.java)
+                        val intent = Intent(this@MainActivity, SettingsActivity::class.java)
                         startActivity(intent)
                     } else {
                         Log.i(TAG, "Socket is not connected.")

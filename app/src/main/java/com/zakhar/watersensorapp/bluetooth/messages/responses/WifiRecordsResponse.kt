@@ -1,6 +1,6 @@
 package com.zakhar.watersensorapp.bluetooth.messages.responses
 
-import com.zakhar.watersensorapp.wifiActivity.WifiRecord
+import com.zakhar.watersensorapp.settings.wifi.WifiRecord
 import kotlinx.serialization.Serializable
 
 @Serializable

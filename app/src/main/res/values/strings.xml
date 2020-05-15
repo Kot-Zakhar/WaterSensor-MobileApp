@@ -13,4 +13,38 @@
     <string name="restart_command">Restart</string>
     <string name="mode_command">Change mode</string>
     <string name="online_statistics_command">Online statistics</string>
+    <string name="title_activity_smtp">SmtpActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="smtp_port_prompt">SMTP port</string>
+    <string-array name="possible_smtp_ports">
+        <item>25</item>
+        <item>465</item>
+        <item>587</item>
+    </string-array>
+
+    <string name="imap_port_prompt">IMAP port</string>
+    <string-array name="possible_imap_ports">
+        <item>143</item>
+        <item>993</item>
+    </string-array>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="hello_home_second">Hello HomeSecondFragment. Arg: %1$s</string>
+    <string name="hello_dashboard_second">Hello HomeSecondFragment. Arg: %1$s</string>
+    <string name="hello_notifications_second">Hello HomeSecondFragment. Arg: %1$s</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="home_second">Home Second</string>
+    <string name="title_settings_email">Email</string>
+    <string name="title_settings_wifi">WiFi</string>
+    <string name="title_activity_blblblblblb">blblblblblbActivity</string>
 </resources>

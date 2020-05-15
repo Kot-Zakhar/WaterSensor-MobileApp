@@ -1,4 +1,4 @@
-package com.zakhar.watersensorapp.wifiActivity
+package com.zakhar.watersensorapp.settings.wifi
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import android.widget.TextView
 import com.zakhar.watersensorapp.R
-import com.zakhar.watersensorapp.bluetooth.commands.wifi.EditWifiRecordCommand
+import com.zakhar.watersensorapp.bluetooth.commands.EditWifiRecordCommand
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

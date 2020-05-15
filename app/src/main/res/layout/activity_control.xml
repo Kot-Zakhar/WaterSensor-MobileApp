@@ -57,6 +57,22 @@
                     />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!--    Email section    -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                >
+            <Button
+                    android:id="@+id/activity_control__email__button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="Email settings"
+                    />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

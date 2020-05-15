@@ -4,8 +4,8 @@ import android.bluetooth.BluetoothSocket
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.zakhar.watersensorapp.bluetooth.CurrentBluetoothDevice
 import com.zakhar.watersensorapp.bluetooth.commands.PingCommand
-import com.zakhar.watersensorapp.bluetooth.commands.wifi.WifiIntentCommand
 import kotlinx.android.synthetic.main.activity_control.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,10 +28,16 @@ class ControlActivity: AppCompatActivity(), CoroutineScope {
         }
 
         PingCommand(this, activity_control__ping__button, activity_control__ping__text_view)
-        WifiIntentCommand(
-            this,
-            activity_control__wifi__button
-        )
+
+//        activity_control__wifi__button.setOnClickListener{
+//            val intent = Intent(this, WifiActivity::class.java)
+//            ContextCompat.startActivity(this, intent, null)
+//        }
+//
+//        activity_control__email__button.setOnClickListener{
+//            var intent = Intent(this, EmailActivity::class.java)
+//            ContextCompat.startActivity(this, intent, null)
+//        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

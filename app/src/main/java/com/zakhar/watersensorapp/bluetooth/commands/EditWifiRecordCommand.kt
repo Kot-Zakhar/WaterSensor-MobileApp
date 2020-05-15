@@ -1,18 +1,12 @@
-package com.zakhar.watersensorapp.bluetooth.commands.wifi
+package com.zakhar.watersensorapp.bluetooth.commands
 
 import android.util.Log
-import com.zakhar.watersensorapp.CurrentBluetoothDevice
-import com.zakhar.watersensorapp.bluetooth.commands.BluetoothCommand
+import com.zakhar.watersensorapp.bluetooth.CurrentBluetoothDevice
 import com.zakhar.watersensorapp.bluetooth.messages.queries.RemoveWifiRecordByIndexQuery
 import com.zakhar.watersensorapp.bluetooth.messages.responses.SimpleResponse
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
-class EditWifiRecordCommand(
-) : BluetoothCommand() {
+class EditWifiRecordCommand {
     private val TAG = "EditWifiRecordCommand"
 
     suspend fun removeRecord(position: Int): Boolean {
@@ -23,9 +17,4 @@ class EditWifiRecordCommand(
         val answer= Json.parse(SimpleResponse.serializer(), serializedResponse)
         return answer.isOk()
     }
-
-    override fun execute() {
-        TODO("Not yet implemented")
-    }
-
 }

@@ -1,26 +1,41 @@
-package com.zakhar.watersensorapp
+package com.zakhar.watersensorapp.bluetooth
 
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.util.Log
 import kotlinx.coroutines.yield
 import java.io.IOException
+import java.util.*
 
 class CurrentBluetoothDevice {
     companion object {
+        private var appUUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+
         var device: BluetoothDevice? = null
         private var socket : BluetoothSocket? = null
-        private val TAG: String = "BluetoothCommand"
+        private val TAG: String = "CurrentBluetoothDevice"
+
+        fun connect() {
+
+        }
 
         fun setSocket(socket: BluetoothSocket?) {
-            if (this.socket != null) {
-                this.socket?.close()
+            if (Companion.socket != null) {
+                Companion.socket?.close()
             }
-            this.socket = socket
+            Companion.socket = socket
         }
 
         fun getSocket(): BluetoothSocket? {
-            return this.socket
+            if (socket == null) {
+                socket = device!!.createRfcommSocketToServiceRecord(
+                    appUUID
+                )
+            }
+            if (socket != null && !socket!!.isConnected) {
+                socket!!.connect()
+            }
+            return socket
         }
 
         fun sendCommand(input: String) {

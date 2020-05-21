@@ -44,7 +44,7 @@ class ControlActivity: AppCompatActivity(), CoroutineScope {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_control)
 
-        socket = CurrentBluetoothDevice.getSocket()
+//        socket = CurrentBluetoothDevice.getSocket()
 
         if (socket == null) {
             Log.i(TAG, "Socket is null.")
@@ -56,8 +56,8 @@ class ControlActivity: AppCompatActivity(), CoroutineScope {
 
     override fun onDestroy() {
         socket?.close()
-        CurrentBluetoothDevice.setSocket(null)
-        CurrentBluetoothDevice.device = null;
+//        CurrentBluetoothDevice.setSocket(null)
+//        CurrentBluetoothDevice.device = null;
         job.cancel()
         super.onDestroy()
     }

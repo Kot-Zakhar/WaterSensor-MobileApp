@@ -9,33 +9,20 @@ import java.util.*
 
 class CurrentBluetoothDevice {
     companion object {
+        private val TAG: String = "CurrentBluetoothDevice"
         private var appUUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
 
         var device: BluetoothDevice? = null
-        private var socket : BluetoothSocket? = null
-        private val TAG: String = "CurrentBluetoothDevice"
+        var isConnected: Boolean = false
+            get() = socket != null && socket!!.isConnected
 
-        fun connect() {
+        var socket : BluetoothSocket? = null
 
-        }
-
-        fun setSocket(socket: BluetoothSocket?) {
-            if (Companion.socket != null) {
-                Companion.socket?.close()
-            }
-            Companion.socket = socket
-        }
-
-        fun getSocket(): BluetoothSocket? {
-            if (socket == null) {
-                socket = device!!.createRfcommSocketToServiceRecord(
-                    appUUID
-                )
-            }
-            if (socket != null && !socket!!.isConnected) {
-                socket!!.connect()
-            }
-            return socket
+        fun createSocketAndConnect() {
+            if (device == null)
+                return
+            socket = device!!.createRfcommSocketToServiceRecord(appUUID)
+            socket!!.connect()
         }
 
         fun sendCommand(input: String) {

@@ -37,13 +37,12 @@ class WifiFragment: Fragment(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        socket = CurrentBluetoothDevice.getSocket()
+        socket = CurrentBluetoothDevice.socket
 
         if (socket == null) {
             Log.i(TAG, "Socket is null")
             exitProcess(1)
         }
-
 
         wifiArrayAdapter = WifiArrayAdapter(this,
             EditWifiRecordCommand(), requireContext())

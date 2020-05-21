@@ -41,35 +41,35 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         if (!bluetoothAdapter.isEnabled) {
             val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             startActivityForResult(enableBluetoothIntent, REQUEST_ENABLE_BLUETOOTH)
+        } else {
+            getDevicesToAdapter()
         }
 
-        val devices = bluetoothAdapter.bondedDevices.toTypedArray()
-
-        devicesArrayAdapter =
-            BluetoothDeviceArrayAdapter(this, devices)
-
-
-        content_main_list_view_device_list.adapter = devicesArrayAdapter
         content_main_list_view_device_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            val device: BluetoothDevice = devicesArrayAdapter.getItem(position) ?: return@OnItemClickListener
-            val socket = device.createRfcommSocketToServiceRecord(appUUID)
+            CurrentBluetoothDevice.device = devicesArrayAdapter.getItem(position) ?: return@OnItemClickListener
+//            val socket = device.createRfcommSocketToServiceRecord(appUUID)
 
             launch {
                 try {
-                    socket.connect()
-                    if (socket.isConnected) {
-                        CurrentBluetoothDevice.setSocket(socket)
+                    CurrentBluetoothDevice.createSocketAndConnect()
+//                    socket.connect()
+                    if (CurrentBluetoothDevice.isConnected) {
                         val intent = Intent(this@MainActivity, SettingsActivity::class.java)
                         startActivity(intent)
                     } else {
                         Log.i(TAG, "Socket is not connected.")
                     }
                 } catch (e: IOException) {
-                    Log.e(TAG, "Can't connect to " + device.name + ": " + e.message)
+                    Log.e(TAG, "Can't connect to device: " + e.message)
                 }
             }
         }
+    }
 
+    private fun getDevicesToAdapter() {
+        val devices = bluetoothAdapter.bondedDevices.toTypedArray()
+        devicesArrayAdapter = BluetoothDeviceArrayAdapter(this, devices)
+        content_main_list_view_device_list.adapter = devicesArrayAdapter
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             if (resultCode == Activity.RESULT_OK) {
                 if (bluetoothAdapter.isEnabled) {
                     Log.i(TAG,"bt has been enabled")
+                    getDevicesToAdapter()
                 } else {
                     Log.i(TAG, "bt has been disabled")
                 }

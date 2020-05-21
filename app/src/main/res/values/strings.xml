@@ -10,7 +10,7 @@
     <string name="wifi_command">Wi-Fi</string>
     <string name="email_command">Email</string>
     <string name="email_restart">Restart</string>
-    <string name="restart_command">Restart</string>
+    <string name="restart">Restart</string>
     <string name="mode_command">Change mode</string>
     <string name="online_statistics_command">Online statistics</string>
     <string name="title_activity_smtp">SmtpActivity</string>
@@ -46,5 +46,7 @@
     <string name="home_second">Home Second</string>
     <string name="title_settings_email">Email</string>
     <string name="title_settings_wifi">WiFi</string>
-    <string name="title_activity_blblblblblb">blblblblblbActivity</string>
+    <string name="title_settings_common">Common</string>
+    <string name="navigation_settings_sensor">Sensor</string>
+    <string name="title_settings_sensor">Sensor</string>
 </resources>

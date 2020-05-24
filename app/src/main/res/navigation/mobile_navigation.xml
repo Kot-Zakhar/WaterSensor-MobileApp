@@ -12,7 +12,7 @@
             tools:layout="@layout/fragment_settings_common"/>
 
     <fragment
-            android:id="@+id/navigation_settin24dpgs_wifi"
+            android:id="@+id/navigation_settings_wifi"
             android:name="com.zakhar.watersensorapp.settings.wifi.WifiFragment"
             android:label="@string/title_settings_wifi"
             tools:layout="@layout/fragment_settings_wifi"/>
@@ -23,9 +23,9 @@
             android:label="@string/title_settings_email"
             tools:layout="@layout/fragment_settings_email"/>
 
-    <fragment
-            android:id="@+id/navigation_settings_sensor"
-            android:name="com.zakhar.watersensorapp.settings.sensor.SensorFragment"
-            android:label="@string/title_settings_sensor"
-            tools:layout="@layout/fragment_settings_sensor"/>
+<!--    <fragment-->
+<!--            android:id="@+id/navigation_settings_sensor"-->
+<!--            android:name="com.zakhar.watersensorapp.settings.sensor.SensorFragment"-->
+<!--            android:label="@string/title_settings_sensor"-->
+<!--            tools:layout="@layout/fragment_settings_sensor"/>-->
 </navigation>

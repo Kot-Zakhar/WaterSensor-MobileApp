@@ -49,4 +49,8 @@
     <string name="title_settings_common">Common</string>
     <string name="navigation_settings_sensor">Sensor</string>
     <string name="title_settings_sensor">Sensor</string>
+    <string name="left_notification_border">Left border</string>
+    <string name="right_notification_border">Right border</string>
+    <string name="save">Save</string>
+    <string name="reset">Reset</string>
 </resources>

@@ -23,9 +23,9 @@
             android:label="@string/title_settings_email"
             tools:layout="@layout/fragment_settings_email"/>
 
-<!--    <fragment-->
-<!--            android:id="@+id/navigation_settings_sensor"-->
-<!--            android:name="com.zakhar.watersensorapp.activities.settings.sensor.SensorFragment"-->
-<!--            android:label="@string/title_settings_sensor"-->
-<!--            tools:layout="@layout/fragment_settings_sensor"/>-->
+    <fragment
+            android:id="@+id/navigation_settings_sensor"
+            android:name="com.zakhar.watersensorapp.activities.device.fragments.sensor.SensorFragment"
+            android:label="@string/title_settings_sensor"
+            tools:layout="@layout/fragment_settings_sensor"/>
 </navigation>

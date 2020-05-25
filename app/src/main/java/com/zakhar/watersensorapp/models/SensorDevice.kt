@@ -12,10 +12,7 @@ import com.zakhar.watersensorapp.dataModels.messages.queries.EmailSettingsSetQue
 import com.zakhar.watersensorapp.dataModels.messages.queries.ModeSetQuery
 import com.zakhar.watersensorapp.dataModels.messages.queries.NewWifiRecordQuery
 import com.zakhar.watersensorapp.dataModels.messages.queries.RemoveWifiRecordByIndexQuery
-import com.zakhar.watersensorapp.dataModels.messages.responses.EmailSettingsResponse
-import com.zakhar.watersensorapp.dataModels.messages.responses.GetModeResponse
-import com.zakhar.watersensorapp.dataModels.messages.responses.SimpleResponse
-import com.zakhar.watersensorapp.dataModels.messages.responses.WifiRecordsResponse
+import com.zakhar.watersensorapp.dataModels.messages.responses.*
 import kotlinx.serialization.json.Json
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -59,12 +56,6 @@ class SensorDevice private constructor(val device: BluetoothDevice) {
         socket?.close()
     }
 
-    suspend fun getWifiSettings(): List<WifiRecord> {
-        val serializedWifiRecords = socket?.sendCommandWithFeedback("{\"command\":\"show\"}") ?: return emptyList()
-        val recordsMessage = Json.parse(WifiRecordsResponse.serializer(), serializedWifiRecords)
-        return recordsMessage.payload
-    }
-
     fun tryToConnect(onSuccess: ()->Unit, onFailure: ()->Unit): Boolean {
         socket = device.createRfcommSocketToServiceRecord(appUUID)
         socket!!.connect()
@@ -75,6 +66,22 @@ class SensorDevice private constructor(val device: BluetoothDevice) {
             onFailure()
         }
         return result
+    }
+
+    suspend fun getSensorValue(): Long? {
+        val serializedSensorValueResponse = socket?.sendCommandWithFeedback("{\"command\":\"sensor value\"}") ?: return null
+        val sensorValueResponse = Json.parse(SensorValueResponse.serializer(), serializedSensorValueResponse)
+        return if (sensorValueResponse.status.toLowerCase() == "ok") {
+            sensorValueResponse.payload
+        } else {
+            null
+        }
+    }
+
+    suspend fun getWifiSettings(): List<WifiRecord> {
+        val serializedWifiRecords = socket?.sendCommandWithFeedback("{\"command\":\"show\"}") ?: return emptyList()
+        val recordsMessage = Json.parse(WifiRecordsResponse.serializer(), serializedWifiRecords)
+        return recordsMessage.payload
     }
 
     suspend fun addWifiRecord(record: WifiRecord): Boolean {

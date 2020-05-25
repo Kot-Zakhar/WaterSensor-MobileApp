@@ -14,9 +14,9 @@
             android:icon="@drawable/ic_email_black"
             android:title="@string/title_settings_email"/>
 
-<!--    <item-->
-<!--            android:id="@+id/navigation_settings_sensor"-->
-<!--            android:icon="@drawable/ic_settings_input_antenna_black"-->
-<!--            android:title="@string/navigation_settings_sensor"/>-->
+    <item
+            android:id="@+id/navigation_settings_sensor"
+            android:icon="@drawable/ic_settings_input_antenna_black"
+            android:title="@string/navigation_settings_sensor"/>
 
 </menu>

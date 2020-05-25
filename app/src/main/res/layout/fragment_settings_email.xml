@@ -1,144 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".settings.email.EmailFragment">
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+        <variable name="emailSettings" type="com.zakhar.watersensorapp.dataModels.EmailSettings" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp"
-            android:id="@+id/fragment_settings_email__settings__linear_layout"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0">
+            android:layout_height="match_parent"
+            tools:context=".activities.device.fragments.email.EmailFragment">
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                    <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/smtp_server"
+                            android:text="@{emailSettings.smtpServer}"
+                            android:hint="SMTP server address"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Spinner
+                        android:id="@+id/smtp_port"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:prompt="@string/smtp_port_prompt"
+                        android:entries="@array/possible_smtp_ports"
+                        />
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                    <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imap_server"
+                            android:text="@{emailSettings.imapServer}"
+                            android:hint="IMAP server address"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Spinner
+                        android:id="@+id/imap_port"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:prompt="@string/imap_port_prompt"
+                        android:entries="@array/possible_imap_ports"/>
+
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_height="wrap_content">
                 <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/fragment_settings_email__settings__smtp_server"
-                        android:hint="SMTP server address"/>
+                        android:id="@+id/email"
+                        android:text="@{emailSettings.email}"
+                        android:inputType="textEmailAddress"
+                        android:hint="Email"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Spinner
-                    android:id="@+id/fragment_settings_email__settings__smtp_port"
-                    android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/password"
+                        android:text="@{emailSettings.password}"
+                        android:hint="Password"
+                        android:inputType="textPassword"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sender"
+                        android:text="@{emailSettings.sender}"
+                        android:hint="Sender name"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/recipient"
+                        android:text="@{emailSettings.recipient}"
+                        android:hint="Recipient (blank if same as email)"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="horizontal"
+                >
+
+            <Button
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:prompt="@string/smtp_port_prompt"
-                    android:entries="@array/possible_smtp_ports"
+                    android:text="Save"
+                    android:id="@+id/save_button"
+                    android:padding="10dp"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
                     />
 
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Reset"
+                    android:id="@+id/reset_button"
+                    android:padding="10dp"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    />
         </LinearLayout>
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/fragment_settings_email__settings__imap_server"
-                        android:hint="IMAP server address"/>
-            </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Spinner
-                    android:id="@+id/fragment_settings_email__settings__imap_port"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:prompt="@string/imap_port_prompt"
-                    android:entries="@array/possible_imap_ports"/>
-
-        </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/fragment_settings_email__settings__email"
-                    android:inputType="textEmailAddress"
-                    android:hint="Email"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/fragment_settings_email__settings__pass"
-                    android:hint="Password"
-                    android:inputType="textPassword"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/fragment_settings_email__settings__sender"
-                    android:hint="Sender name"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/fragment_settings_email__settings__recipient"
-                    android:hint="Recipient (blank if same as email)"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="horizontal"
-            android:id="@+id/fragment_settings_email__actions__linear_layout"
-            >
-
-        <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Save"
-                android:id="@+id/fragment_settings_email__actions__save_button"
-                android:padding="10dp"
-                android:layout_margin="15dp"
-                android:layout_weight="1"
-                />
-
-        <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Reset"
-                android:id="@+id/fragment_settings_email__actions__reset_button"
-                android:padding="10dp"
-                android:layout_margin="15dp"
-                android:layout_weight="1"
-                />
-    </LinearLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
